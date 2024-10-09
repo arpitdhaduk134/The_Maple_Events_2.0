@@ -1,0 +1,47 @@
+/* AboutUs.css */
+
+/* Container for the whole section */
+.about-us-container {
+  display: flex; /* Use Flexbox to align items horizontally */
+  justify-content: space-between; /* Space between text and image */
+  align-items: center; /* Vertically align the text and image */
+  padding: 20px; /* Add padding around the section */
+  gap: 20px; /* Space between text and image */
+}
+
+/* Text section */
+.about-us-text {
+  flex: 1; /* Take up 50% of the width */
+  padding-right: 20px;
+}
+
+.about-us-text h2 {
+  margin-bottom: 15px;
+  font-size: 2rem;
+}
+.about-us-mergecontainer{
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+.about-us-text p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+/* Image section */
+.about-us-image {
+  
+  display: flex;
+  justify-content: flex-end; /* Align image to the right */
+}
+
+/* Style for the image with rounded corners */
+.rounded-image {
+  width: 100%; /* Adjust width based on container size */
+  max-width: 600px; /* Limit the image size */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 20px; /* Rounded corners */
+  object-fit: cover; /* Maintain aspect ratio while covering the area */
+}

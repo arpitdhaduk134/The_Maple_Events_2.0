@@ -1,0 +1,8 @@
+/* ImageGrid.css */
+
+/* Remove the border and shadow from the entire Card */
+.services-cards {
+  border: none; /* Remove the default Bootstrap card border */
+  box-shadow: none; /* Remove the shadow around the card */
+  border-width: 0;
+}

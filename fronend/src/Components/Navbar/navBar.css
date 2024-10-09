@@ -1,0 +1,15 @@
+
+
+.custom-button {
+  border-radius: 30px; /* Adjust the value for more or less rounding */
+  background-color: #fa67e9; /* Set your desired button color */
+  color: rgb(245, 243, 249); /* Text color */
+  border: none; /* Remove border */
+  padding: 10px 20px; /* Adjust padding */
+  transition: background-color 0.3s; /* Smooth transition on hover */
+}
+
+.custom-button:hover {
+  background-color: #0b0b0b; 
+  color: rgb(245, 243, 249);
+}

@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const stationerySchema = new mongoose.Schema({
-  packageName: { type: String, required: true },
-  pricePerPiece: { type: Number, required: true },
+  packageName: String,
+  pricePerPiece: Number,
   itemsIncluded: [String],
-  description: { type: String },
-  photos: [String],
+  description: String,
+  tags: [String],
+  photos: [String]
 });
 
-const Stationery = mongoose.model('Stationery', stationerySchema);
-module.exports = Stationery;
+module.exports = mongoose.model('Stationery', stationerySchema);

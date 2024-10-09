@@ -1,0 +1,9 @@
+/* MainImage.css */
+
+
+.main-image {
+    width: 100%; /* Image takes up the full width */
+    max-height: 800px;
+    height: 20%; /* Maintains the aspect ratio */
+    object-fit: cover; /* Ensure the image covers its container if needed */
+}

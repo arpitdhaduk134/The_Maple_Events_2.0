@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
 const photographySchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  price: { type: Number, required: true },
-  coverageTime: { type: Number, required: true },
-  packageType: { type: String },
-  description: { type: String },
-  photos: [String],
+  name: String,
+  price: Number,
+  coverageTime: Number,
+  packageType: String,
+  description: String,
+  tags: [String],
+  photos: [String]
 });
 
-const Photography = mongoose.model('Photography', photographySchema);
-module.exports = Photography;
+module.exports = mongoose.model('Photography', photographySchema);

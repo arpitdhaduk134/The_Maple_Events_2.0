@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const cateringSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  pricePerGuest: { type: Number, required: true },
+  name: String,
+  pricePerGuest: Number,
   menuOptions: [String],
-  description: { type: String },
-  photos: [String],
+  description: String,
+  tags: [String],
+  photos: [String]
 });
 
-const Catering = mongoose.model('Catering', cateringSchema);
-module.exports = Catering;
+module.exports = mongoose.model('Catering', cateringSchema);
