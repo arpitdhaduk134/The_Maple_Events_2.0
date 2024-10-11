@@ -25,7 +25,9 @@ const Navbar = () => {
                             <Link className="nav-link" to="/budget-calculator">Budget Calculator</Link> {/* New Link */}
                         </li>
                     </ul>
-                    <button className="btn custom-button">Book Us</button>
+                    <Link to="/bookus"> 
+                        <button className="btn custom-button">Book Us</button>
+                    </Link>
                 </div>
             </div>
         </nav>
