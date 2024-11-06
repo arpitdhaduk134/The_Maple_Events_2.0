@@ -1,0 +1,118 @@
+/* Portfolio Page Container */
+.portfolio-page {
+    padding: 50px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Header Section */
+.portfolio-header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.portfolio-header p {
+    font-size: 1.2em;
+    color: #666;
+    margin-bottom: 50px;
+}
+
+/* Portfolio Grid */
+.portfolio-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px; /* Increased gap between portfolio items to 50px */
+    justify-content: center;
+    max-width: 1000px;
+    width: 100%;
+}
+
+/* Individual Portfolio Item - Square Shape */
+.portfolio-item {
+    flex: 1 1 calc(80% - 50px); /* Increased width to 60% */
+    max-width: calc(80% - 50px); /* Increased max-width for more space */
+    height: auto; /* Height adjusts automatically based on content */
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    position: relative;
+    background: #fff;
+}
+
+
+/* Portfolio Item Image Styling */
+.portfolio-item img {
+    width: 100%; /* Ensures the image fills the width of the container */
+    height: 100%; /* Adjusts height based on the image's aspect ratio */
+    object-fit: cover; /* Ensures the image covers the area while maintaining its aspect ratio */
+    transition: transform 0.3s ease;
+}
+
+/* Hover Effect for Image and Overlay */
+.portfolio-item:hover img {
+    transform: scale(1.1);
+}
+
+/* Overlay for Hover Text */
+.portfolio-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    text-align: left;
+}
+
+.portfolio-item:hover .portfolio-overlay {
+    transform: translateY(0);
+}
+
+.portfolio-overlay h3 {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.portfolio-overlay p {
+    font-size: 1em;
+    margin-top: 10px;
+}
+
+/* Responsive Design */
+
+/* Small Screens */
+@media (max-width: 768px) {
+    .portfolio-item {
+        flex: 1 1 90%; /* One item per row on small screens */
+        max-width: 90%;
+        height: auto;
+        aspect-ratio: 1 / 1; /* Ensures square shape */
+    }
+}
+
+/* Medium Screens */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .portfolio-item {
+        flex: 1 1 calc(45% - 50px); /* Two items per row */
+        max-width: calc(45% - 50px);
+        height: auto;
+        aspect-ratio: 1 / 1; /* Ensures square shape */
+    }
+}
+
+/* Large Screens */
+@media (min-width: 1025px) {
+    .portfolio-item {
+        flex: 1 1 calc(45% - 50px); /* Two items per row */
+        max-width: calc(45% - 50px);
+        height: auto;
+        aspect-ratio: 1 / 1; /* Ensures square shape */
+    }
+}

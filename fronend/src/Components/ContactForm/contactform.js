@@ -1,6 +1,6 @@
 // ContactForm.js
 import React, { useState } from 'react';
-import './contactform.css'; // Optional: Add your CSS file for styling
+import './contactform.css';
 
 const ContactForm = () => {
     const [formData, setFormData] = useState({
@@ -10,6 +10,7 @@ const ContactForm = () => {
     });
 
     const [error, setError] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -21,18 +22,17 @@ const ContactForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        // Simple validation
+
         if (!formData.name || !formData.email || !formData.message) {
             setError('All fields are required.');
+            setSuccessMessage('');
             return;
         }
-        
-        // Reset error and perform submission logic (e.g., send data to server)
+
         setError('');
+        setSuccessMessage('Thank you! Your message has been sent.');
         console.log('Form submitted:', formData);
-        
-        // Clear the form
+
         setFormData({
             name: '',
             email: '',
@@ -40,11 +40,20 @@ const ContactForm = () => {
         });
     };
 
+    const handleMapRedirect = () => {
+        const address = "47 Peartree Crescent, Guelph, ON N1H 8J2, Canada";
+        const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+        window.open(googleMapsUrl, '_blank');
+    };
+
     return (
-        <div>
         <div className="contact-form-container">
-           
+            <h3>Contact Us</h3>
+            <p>Visit us to discuss your event needs and vision with our expert team.</p>
+
             {error && <p className="error">{error}</p>}
+            {successMessage && <p className="success-message">{successMessage}</p>}
+
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="name">Name:</label>
@@ -80,11 +89,10 @@ const ContactForm = () => {
                 </div>
                 <button type="submit">Send Message</button>
             </form>
-        </div>
-        <div>
-        <h3>Visit us at our convenient location to discuss your event needs and vision with our expert team.</h3>
 
-        </div>
+            <button onClick={handleMapRedirect} className="map-button">
+                Find Us on Google Maps
+            </button>
         </div>
     );
 };

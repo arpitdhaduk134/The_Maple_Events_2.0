@@ -8,6 +8,7 @@ import Services from "./Components/Services/services.js";
 import Portfolio from "./Components/Portfolio/portfolio.js";
 import Events from "./Components/Events/events.js";
 import BudgetCalculator from "./Components/BudgetCalculator/budgetCalculator.js"; // Import BudgetCalculator
+import BookUs from "./Components/BookUs/bookus.js"// Import BudgetCalculator
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Layout from "./Components/Layout/layout.js";
 
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/events" element={<Events />} />
           <Route path="/budget-calculator" element={<BudgetCalculator />} /> {/* New Route for Budget Calculator */}
+          <Route path="/book-us" element={<BookUs/>} /> {/* New Route for Budget Calculator */}
         </Routes>
       </Layout>
     </Router>

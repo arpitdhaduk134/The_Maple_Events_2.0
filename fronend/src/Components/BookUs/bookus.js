@@ -1,6 +1,7 @@
 import React from 'react';
 import ContactForm from '../ContactForm/contactform';
-import MapComponent from '../Map/map';
+import './bookus.css'
+// import MapComponent from '../Map/map';
 const BookUs = () => {
     return (
         <div className='portfolio-mergecontainer'>
