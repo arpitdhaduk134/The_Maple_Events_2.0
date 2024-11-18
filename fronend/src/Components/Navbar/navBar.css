@@ -1,39 +1,104 @@
-/* Optional custom styling */
+/* Navbar Container */
 .navbar {
   padding: 1rem 2rem;
+  background: linear-gradient(90deg, #1A1A1A, #880E4F); /* Black to Deep Red */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  font-family: 'Poppins', sans-serif; /* Elegant font */
 }
 
-.custom-button {
-  background-color: #d85999; /* Custom button color */
-  color: white;
-  border-radius: 25px;
-  padding: 10px 20px;
+/* Logo Styling */
+.navbar-brand img {
+  max-height: 50px; /* Keep logo at a reasonable size */
+  width: auto;
 }
 
-.custom-button:hover {
-  background-color: #000000; /* Slightly darker color on hover */
-  color: #fff;
+/* Toggler Button for Mobile */
+.navbar-toggler-icon {
+  background-image: url('data:image/svg+xml;charset=UTF8,%3Csvg xmlns%3D%22http://www.w3.org/2000/svg%22 viewBox%3D%220 0 30 30%22%3E%3Cpath stroke%3D%22rgba%28D4,AF,37,1%29%22 stroke-width%3D%222%22 stroke-linecap%3D%22round%22 stroke-miterlimit%3D%2210%22 d%3D%22M4 7h22M4 15h22M4 23h22%22/%3E%3C/svg%3E');
 }
 
-.navbar-brand {
-  font-weight: bold;
-  font-size: 1.5rem;
+/* Center Navbar Items */
+.navbar-collapse {
+  justify-content: flex-end;
 }
 
-/* Styling for active link */
-.nav-link.active {
-  color: orange !important; /* Orange color for active link */
-  /* font-weight: bold; */
-  text-decoration: underline; 
-}
-
-/* Other styling for links */
+/* Nav Links Styling */
 .nav-link {
-  color: white;
+  color: #FFFFFF; /* Default white for non-active links */
   font-size: 1.1rem;
   text-transform: capitalize;
+  margin-right: 15px;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .nav-link:hover {
-  color: orange; /* Change color on hover */
+  color: #D4AF37; /* Gold on hover */
+  text-shadow: 0px 0px 6px rgba(212, 175, 55, 0.8); /* Subtle glow effect */
+}
+
+.nav-link.active {
+  color: #D4AF37; /* Gold for active link */
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/* Buttons */
+.custom-button {
+  background: linear-gradient(90deg, #B22222, #D4AF37); /* Deep Red to Gold */
+  color: #1A1A1A; /* Black text for contrast */
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-button:hover {
+  background: linear-gradient(90deg, #D4AF37, #FF007C); /* Gold to Pink */
+  color: #FFFFFF;
+  box-shadow: 0 8px 20px rgba(255, 0, 127, 0.3);
+  transform: translateY(-3px);
+}
+
+/* Dropdown Menu Styling (Optional) */
+.dropdown-menu {
+  background-color: #1A1A1A; /* Same as navbar */
+  border: 1px solid #D4AF37; /* Gold border */
+}
+
+.dropdown-item {
+  color: #FFFFFF;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #880E4F; /* Deep Red */
+  color: #D4AF37; /* Gold */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem;
+  }
+
+  .nav-link {
+    font-size: 1rem;
+  }
+
+  .custom-button {
+    font-size: 0.85rem;
+    padding: 8px 15px;
+  }
+}
+
+/* Optional Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

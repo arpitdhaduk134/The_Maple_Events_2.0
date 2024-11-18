@@ -1,20 +1,11 @@
-require('dotenv').config();
 const mongoose = require('mongoose');
-const Venue = require('./models/Venue');
-const Catering = require('./models/Catering');
-const Decorations = require('./models/Decorations');
-const Entertainment = require('./models/Entertainment');
-const Photography = require('./models/Photography');
-const Transportation = require('./models/Transportation');
-const Stationery = require('./models/Stationery');
+require('dotenv').config();
 
-// Connect to MongoDB
+const Catalog = require('./models/Catalog'); // Update the path as needed
+
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
     console.log('MongoDB Connected');
   } catch (error) {
     console.error('MongoDB connection error:', error.message);
@@ -22,71 +13,153 @@ const connectDB = async () => {
   }
 };
 
-// Sample data for seeding
-const venuesData = [
-  { name: "Elegant Ballroom", location: "Toronto", capacity: 200, price: 4000, tags: ["Wedding", "Corporate Event"], photos: ["https://via.placeholder.com/150"] },
-  { name: "Lakeside Pavilion", location: "Vancouver", capacity: 120, price: 1500, tags: ["Wedding", "Birthday"], photos: ["https://via.placeholder.com/150"] }
-];
+const seedData = async () => {
+  await connectDB();
 
-const cateringData = [
-  { name: "Gourmet Feast", pricePerGuest: 50, menuOptions: ["Italian", "Indian", "Continental"], description: "A delicious multi-cuisine buffet for any event.", tags: ["Wedding", "Corporate Event", "Birthday"], photos: ["https://via.placeholder.com/150"] },
-  { name: "Street Food Fiesta", pricePerGuest: 20, menuOptions: ["Mexican", "BBQ", "Vegetarian"], description: "Tasty street food options to spice up your party.", tags: ["Birthday", "Anniversary"], photos: ["https://via.placeholder.com/150"] }
-];
+  const data = [
+    // Venues
+    {
+      name: "Elegant Ballroom",
+      type: "venue",
+      description: "Spacious ballroom perfect for weddings and corporate events.",
+      price: 4000,
+      capacity: 200,
+      location: "Toronto",
+      tags: ["Wedding", "Corporate Event"],
+      photos: ["uploads/images/wedding.jpg"],
+    },
+    {
+      name: "Lakeside Pavilion",
+      type: "venue",
+      description: "Beautiful lakeside venue for intimate gatherings.",
+      price: 1500,
+      capacity: 100,
+      location: "Vancouver",
+      tags: ["Wedding", "Birthday"],
+      photos: ["uploads/images/birthday.jpg"],
+    },
+  
+    // Catering
+    {
+      name: "Gourmet Feast",
+      type: "catering",
+      description: "A delicious multi-cuisine buffet for any event.",
+      pricePerGuest: 50,
+      tags: ["Wedding", "Corporate Event", "Birthday"],
+      photos: ["uploads/images/catering.jpg"],
+    },
+    {
+      name: "Street Food Fiesta",
+      type: "catering",
+      description: "Tasty street food options to spice up your party.",
+      pricePerGuest: 20,
+      tags: ["Birthday", "Anniversary"],
+      photos: ["uploads/images/street-food.jpg"],
+    },
+  
+    // Decorations
+    {
+      name: "Royal Wedding Theme",
+      type: "decorations",
+      description: "Elegant royal theme decorations to make your wedding day special.",
+      price: 1200,
+      tags: ["Wedding"],
+      photos: ["uploads/images/royal-wedding.jpg"],
+    },
+    {
+      name: "Modern Corporate Decor",
+      type: "decorations",
+      description: "Stylish decorations suitable for corporate events.",
+      price: 800,
+      tags: ["Corporate Event"],
+      photos: ["uploads/images/corporate-decor.jpg"],
+    },
+  
+    // Entertainment
+    {
+      name: "DJ Party",
+      type: "entertainment",
+      description: "A fun and vibrant DJ party for your event.",
+      price: 1000,
+      tags: ["Wedding", "Birthday"],
+      photos: ["uploads/images/dj-party.jpg"],
+    },
+    {
+      name: "Magic Show",
+      type: "entertainment",
+      description: "A fun-filled magic show for all ages.",
+      price: 800,
+      tags: ["Birthday", "Corporate Event"],
+      photos: ["uploads/images/magic-show.jpg"],
+    },
+  
+    // Photography
+    {
+      name: "Classic Photography",
+      type: "photography",
+      description: "Professional photography package for all events.",
+      price: 800,
+      tags: ["Wedding", "Birthday"],
+      photos: ["uploads/images/photography.jpg"],
+    },
+    {
+      name: "Cinematic Videography",
+      type: "photography",
+      description: "Cinematic video coverage for weddings and events.",
+      price: 1200,
+      tags: ["Wedding", "Anniversary"],
+      photos: ["uploads/images/videography.jpg"],
+    },
+  
+    // Transportation
+    {
+      name: "Luxury Limousine",
+      type: "transportation",
+      description: "Luxury limousine service for special events.",
+      pricePerHour: 200,
+      capacity: 8,
+      tags: ["Wedding", "Corporate Event"],
+      photos: ["uploads/images/limousine.jpg"],
+    },
+    {
+      name: "Party Bus",
+      type: "transportation",
+      description: "Spacious party bus for group transport.",
+      pricePerHour: 150,
+      capacity: 20,
+      tags: ["Birthday", "Anniversary"],
+      photos: ["uploads/images/party-bus.jpg"],
+    },
+  
+    // Stationery
+    {
+      name: "Elegant Invitations",
+      type: "stationery",
+      description: "Beautifully crafted invitations for weddings.",
+      pricePerPiece: 5,
+      tags: ["Wedding"],
+      photos: ["uploads/images/invitations.jpg"],
+    },
+    {
+      name: "Corporate Stationery",
+      type: "stationery",
+      description: "Custom stationery for corporate branding.",
+      pricePerPiece: 3,
+      tags: ["Corporate Event"],
+      photos: ["uploads/images/corporate-stationery.jpg"],
+    },
+  ];
+  
 
-const decorationsData = [
-  { packageName: "Royal Wedding Theme", price: 1200, includedItems: ["Flower Arrangements", "Table Centerpieces", "Backdrop"], description: "Elegant royal theme decorations to make your wedding day special.", tags: ["Wedding"], photos: ["https://via.placeholder.com/150"] },
-  { packageName: "Modern Corporate Decor", price: 800, includedItems: ["LED Lights", "Themed Backdrops"], description: "Stylish decorations suitable for corporate events.", tags: ["Corporate Event"], photos: ["https://via.placeholder.com/150"] }
-];
-
-const entertainmentData = [
-  { name: "DJ Party", type: "Music", price: 1000, duration: 
-    4, description: "A fun and vibrant DJ party for your event.", tags: ["Wedding", "Birthday"], photos: ["https://via.placeholder.com/150"] },
-    { name: "Magic Show", type: "Performance", price: 800, duration: 2, description: "A fun-filled magic show for all ages.", tags: ["Birthday", "Corporate Event"], photos: ["https://via.placeholder.com/150"] }
-  ];
-  
-  const photographyData = [
-    { name: "Classic Photography", price: 800, coverageTime: 5, packageType: "Standard", description: "Professional photography package for all events.", tags: ["Wedding", "Birthday"], photos: ["https://via.placeholder.com/150"] },
-    { name: "Cinematic Videography", price: 1200, coverageTime: 8, packageType: "Premium", description: "Cinematic video coverage for weddings and events.", tags: ["Wedding", "Anniversary"], photos: ["https://via.placeholder.com/150"] }
-  ];
-  
-  const transportationData = [
-    { vehicleType: "Limousine", pricePerHour: 200, capacity: 8, description: "Luxury limousine service for special events.", tags: ["Wedding", "Corporate Event"], photos: ["https://via.placeholder.com/150"] },
-    { vehicleType: "Party Bus", pricePerHour: 150, capacity: 20, description: "Spacious party bus for group transport.", tags: ["Birthday", "Anniversary"], photos: ["https://via.placeholder.com/150"] }
-  ];
-  
-  const stationeryData = [
-    { packageName: "Elegant Invitations", pricePerPiece: 5, itemsIncluded: ["Printed Invitations", "Envelopes"], description: "Beautifully crafted invitations for weddings.", tags: ["Wedding"], photos: ["https://via.placeholder.com/150"] },
-    { packageName: "Corporate Stationery", pricePerPiece: 3, itemsIncluded: ["Letterhead", "Business Cards"], description: "Custom stationery for corporate branding.", tags: ["Corporate Event"], photos: ["https://via.placeholder.com/150"] }
-  ];
-  
-  // Seeding function
-  const seedData = async () => {
-    await connectDB();
-  
-    await Venue.deleteMany({});
-    await Venue.insertMany(venuesData);
-  
-    await Catering.deleteMany({});
-    await Catering.insertMany(cateringData);
-  
-    await Decorations.deleteMany({});
-    await Decorations.insertMany(decorationsData);
-  
-    await Entertainment.deleteMany({});
-    await Entertainment.insertMany(entertainmentData);
-  
-    await Photography.deleteMany({});
-    await Photography.insertMany(photographyData);
-  
-    await Transportation.deleteMany({});
-    await Transportation.insertMany(transportationData);
-  
-    await Stationery.deleteMany({});
-    await Stationery.insertMany(stationeryData);
-  
+  try {
+    await Catalog.deleteMany({});
+    await Catalog.insertMany(data);
     console.log('Data seeded successfully');
+  } catch (err) {
+    console.error('Error seeding data:', err.message);
+  } finally {
     mongoose.connection.close();
-  };
-  
-  seedData();
-  
+  }
+};
+
+seedData();

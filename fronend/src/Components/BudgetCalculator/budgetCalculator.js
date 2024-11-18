@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './budgetCalculator.css';
 
-
 const BudgetCalculator = () => {
   const [category, setCategory] = useState('');
   const [allocations, setAllocations] = useState({
@@ -20,6 +19,17 @@ const BudgetCalculator = () => {
 
   // Event categories
   const categories = ['Wedding', 'Birthday', 'Corporate Event', 'Anniversary'];
+
+  // Placeholders for each budget field
+  const placeholders = {
+    venue: 'Enter budget for venue (e.g., 5000)',
+    catering: 'Enter budget for catering per guest (e.g., 50)',
+    decorations: 'Enter budget for decorations (e.g., 1500)',
+    entertainment: 'Enter budget for entertainment (e.g., 1000)',
+    photography: 'Enter budget for photography (e.g., 1200)',
+    transportation: 'Enter budget for transportation (e.g., 500)',
+    stationery: 'Enter budget for stationery (e.g., 300)'
+  };
 
   // Handle allocation changes
   const handleAllocationChange = (e) => {
@@ -110,13 +120,13 @@ const BudgetCalculator = () => {
 
         {Object.keys(allocations).map((service) => (
           <div key={service}>
-            <label>Budget for {service}</label>
+            <label>Budget for {service.charAt(0).toUpperCase() + service.slice(1)}</label>
             <input
               type="number"
               name={service}
               value={allocations[service]}
               onChange={handleAllocationChange}
-              placeholder={`Allocate budget for ${service}`}
+              placeholder={placeholders[service]}
             />
           </div>
         ))}

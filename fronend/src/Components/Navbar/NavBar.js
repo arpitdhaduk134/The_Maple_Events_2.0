@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom'; // Import useLocation
-import './navBar.css';
+import './navBar.css'; // Import updated styles
+import Logo from '../../assets/logo/The Maple Events.jpg'; // Adjust path as per your folder structure
 
 const Navbar = () => {
   const location = useLocation(); // Get the current location
@@ -11,34 +12,55 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark">
       <div className="container-fluid">
-        {/* Brand on the left */}
-        <Link className="navbar-brand" to="/">Brand</Link>
+        {/* Brand Logo */}
+        <Link className="navbar-brand" to="/">
+          <img src={Logo} alt="Maple Events Logo" />
+        </Link>
 
-        {/* Navbar toggle button */}
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        {/* Navbar toggle button for mobile view */}
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* Navbar items on the right */}
+        {/* Navbar items */}
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto"> {/* ms-auto pushes items to the right */}
+          <ul className="navbar-nav ms-auto"> {/* ms-auto aligns items to the right */}
             <li className="nav-item">
-              <Link className={getNavLinkClass("/services")} to="/services">Services</Link>
+              <Link className={getNavLinkClass('/services')} to="/services">
+                Services
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className={getNavLinkClass("/portfolio")} to="/portfolio">Portfolio</Link>
+              <Link className={getNavLinkClass('/portfolio')} to="/portfolio">
+                Portfolio
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className={getNavLinkClass("/events")} to="/events">Events</Link>
+              <Link className={getNavLinkClass('/events')} to="/events">
+                Events
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className={getNavLinkClass("/budget-calculator")} to="/budget-calculator">Budget Calculator</Link>
+              <Link
+                className={getNavLinkClass('/budget-calculator')}
+                to="/budget-calculator"
+              >
+                Budget Calculator
+              </Link>
             </li>
           </ul>
 
-          {/* Button on the right */}
+          {/* "Book Us" Button */}
           <Link to="/book-us">
             <button className="btn custom-button">Book Us</button>
           </Link>

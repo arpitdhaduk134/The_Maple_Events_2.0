@@ -1,70 +1,37 @@
-const Venue = require('../models/Venue');
-const Catering = require('../models/Catering');
-const Decorations = require('../models/Decorations');
-const Entertainment = require('../models/Entertainment');
-const Photography = require('../models/Photography');
-const Transportation = require('../models/Transportation');
-const Stationery = require('../models/Stationery');
+const Catalog = require('../models/Catalog');
 
 exports.calculateBudget = async (req, res) => {
   try {
     const { category, allocations } = req.body;
 
-    console.log('Received Allocations:', allocations);
-    console.log('Received Category:', category);
+    // Prepare queries for each type
+    const queries = {
+      venue: { type: 'venue', price: { $lte: allocations.venue || Number.MAX_VALUE } },
+      catering: { type: 'catering', pricePerGuest: { $lte: allocations.catering || Number.MAX_VALUE } },
+      decorations: { type: 'decorations', price: { $lte: allocations.decorations || Number.MAX_VALUE } },
+      entertainment: { type: 'entertainment', price: { $lte: allocations.entertainment || Number.MAX_VALUE } },
+      photography: { type: 'photography', price: { $lte: allocations.photography || Number.MAX_VALUE } },
+      transportation: { type: 'transportation', pricePerHour: { $lte: allocations.transportation || Number.MAX_VALUE } },
+      stationery: { type: 'stationery', pricePerPiece: { $lte: allocations.stationery || Number.MAX_VALUE } },
+    };
 
-    const venueBudget = allocations.venue || Number.MAX_VALUE;
-    const cateringBudget = allocations.catering || Number.MAX_VALUE;
-    const decorationsBudget = allocations.decorations || Number.MAX_VALUE;
-    const entertainmentBudget = allocations.entertainment || Number.MAX_VALUE;
-    const photographyBudget = allocations.photography || Number.MAX_VALUE;
-    const transportationBudget = allocations.transportation || Number.MAX_VALUE;
-    const stationeryBudget = allocations.stationery || Number.MAX_VALUE;
+    // Add category filter if provided
+    if (category) {
+      for (const key in queries) {
+        queries[key].tags = category;
+      }
+    }
 
-    console.log('Budgets parsed:', {
-      venueBudget,
-      cateringBudget,
-      decorationsBudget,
-      entertainmentBudget,
-      photographyBudget,
-      transportationBudget,
-      stationeryBudget,
-    });
-
-    const venues = await Venue.find({
-      price: { $lte: venueBudget },
-      ...(category ? { tags: category } : {})
-    });
-
-    const cateringOptions = await Catering.find({
-      pricePerGuest: { $lte: cateringBudget },
-      ...(category ? { tags: category } : {})
-    });
-
-    const decorations = await Decorations.find({
-      price: { $lte: decorationsBudget },
-      ...(category ? { tags: category } : {})
-    });
-
-    const entertainments = await Entertainment.find({
-      price: { $lte: entertainmentBudget },
-      ...(category ? { tags: category } : {})
-    });
-
-    const photographyPackages = await Photography.find({
-      price: { $lte: photographyBudget },
-      ...(category ? { tags: category } : {})
-    });
-
-    const transportationOptions = await Transportation.find({
-      pricePerHour: { $lte: transportationBudget },
-      ...(category ? { tags: category } : {})
-    });
-
-    const stationeryItems = await Stationery.find({
-      pricePerPiece: { $lte: stationeryBudget },
-      ...(category ? { tags: category } : {})
-    });
+    // Fetch matching results for each service type
+    const [venues, cateringOptions, decorations, entertainments, photographyPackages, transportationOptions, stationeryItems] = await Promise.all([
+      Catalog.find(queries.venue),
+      Catalog.find(queries.catering),
+      Catalog.find(queries.decorations),
+      Catalog.find(queries.entertainment),
+      Catalog.find(queries.photography),
+      Catalog.find(queries.transportation),
+      Catalog.find(queries.stationery),
+    ]);
 
     res.status(200).json({
       success: true,
