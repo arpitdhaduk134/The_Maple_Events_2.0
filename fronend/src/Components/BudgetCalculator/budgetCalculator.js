@@ -11,11 +11,13 @@ const BudgetCalculator = () => {
     entertainment: '',
     photography: '',
     transportation: '',
-    stationery: ''
+    stationery: '',
   });
   const [serviceOptions, setServiceOptions] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [selectedService, setSelectedService] = useState(null); // State to store clicked service details
+  const [showModal, setShowModal] = useState(false); // Modal visibility state
 
   // Event categories
   const categories = ['Wedding', 'Birthday', 'Corporate Event', 'Anniversary'];
@@ -28,15 +30,16 @@ const BudgetCalculator = () => {
     entertainment: 'Enter budget for entertainment (e.g., 1000)',
     photography: 'Enter budget for photography (e.g., 1200)',
     transportation: 'Enter budget for transportation (e.g., 500)',
-    stationery: 'Enter budget for stationery (e.g., 300)'
+    stationery: 'Enter budget for stationery (e.g., 300)',
   };
 
   // Handle allocation changes
   const handleAllocationChange = (e) => {
-    setAllocations({
-      ...allocations,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setAllocations((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   // Handle category change
@@ -50,31 +53,37 @@ const BudgetCalculator = () => {
     setError('');
     setLoading(true);
 
-    // Prepare request body for the API
     const budgetData = {
       category,
-      allocations: {
-        venue: parseFloat(allocations.venue) || null,
-        catering: parseFloat(allocations.catering) || null,
-        decorations: parseFloat(allocations.decorations) || null,
-        entertainment: parseFloat(allocations.entertainment) || null,
-        photography: parseFloat(allocations.photography) || null,
-        transportation: parseFloat(allocations.transportation) || null,
-        stationery: parseFloat(allocations.stationery) || null,
-      },
+      allocations: Object.fromEntries(
+        Object.entries(allocations).map(([key, value]) => [key, parseFloat(value) || 0])
+      ),
     };
 
     try {
       const response = await axios.post('http://localhost:5000/api/budget/calculate', budgetData);
       setServiceOptions(response.data.data);
     } catch (error) {
-      setError('Error fetching options');
+      setError('Error fetching options. Please try again.');
       console.error(error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
-  // Render the cards for each service category
+  // Handle card click to show details
+  const handleCardClick = (service) => {
+    setSelectedService(service);
+    setShowModal(true);
+  };
+
+  // Close modal
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedService(null);
+  };
+
+  // Render cards for each category
   const renderServiceCards = (serviceCategory, serviceData) => {
     if (!serviceData || serviceData.length === 0) {
       return <p>No options available for {serviceCategory} within the budget.</p>;
@@ -83,18 +92,18 @@ const BudgetCalculator = () => {
     return (
       <div className="card-container">
         {serviceData.map((item, index) => (
-          <div className="card" key={index}>
+          <div className="card" key={index} onClick={() => handleCardClick(item)}>
             <div className="card-image">
-              {item.photos && item.photos.length > 0 ? (
-                <img src={item.photos[0]} alt={item.name || 'service'} />
+              {item.titleImage ? (
+                <img src={item.titleImage} alt={item.name || 'service'} />
               ) : (
                 <div className="no-image">No Image Available</div>
               )}
             </div>
             <div className="card-content">
-              <h5>{item.name || item.packageName || item.vehicleType}</h5>
+              <h5>{item.name}</h5>
               <p>{item.description}</p>
-              <p>Price: {item.price || item.pricePerGuest || item.pricePerHour || item.pricePerPiece} CAD</p>
+              <p className="price">Price: {item.price} CAD</p>
             </div>
           </div>
         ))}
@@ -134,39 +143,34 @@ const BudgetCalculator = () => {
         <button type="submit">Submit</button>
       </form>
 
-      {loading && <div>Loading...</div>}
+      {loading && <div className="loading">Loading...</div>}
       {error && <div className="error">{error}</div>}
 
       {serviceOptions && (
         <div className="results">
           <h3>Matching Options Within Your Budget</h3>
-          <div className="service-category">
-            <h4>Venues</h4>
-            {renderServiceCards('Venues', serviceOptions.venues)}
-          </div>
-          <div className="service-category">
-            <h4>Catering</h4>
-            {renderServiceCards('Catering Options', serviceOptions.cateringOptions)}
-          </div>
-          <div className="service-category">
-            <h4>Decorations</h4>
-            {renderServiceCards('Decorations', serviceOptions.decorations)}
-          </div>
-          <div className="service-category">
-            <h4>Entertainment</h4>
-            {renderServiceCards('Entertainments', serviceOptions.entertainments)}
-          </div>
-          <div className="service-category">
-            <h4>Photography</h4>
-            {renderServiceCards('Photography Packages', serviceOptions.photographyPackages)}
-          </div>
-          <div className="service-category">
-            <h4>Transportation</h4>
-            {renderServiceCards('Transportation Options', serviceOptions.transportationOptions)}
-          </div>
-          <div className="service-category">
-            <h4>Stationery</h4>
-            {renderServiceCards('Stationery Items', serviceOptions.stationeryItems)}
+          {Object.keys(serviceOptions).map((category) => (
+            <div key={category} className="service-category">
+              <h4>{category}</h4>
+              {renderServiceCards(category, serviceOptions[category])}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {showModal && selectedService && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={handleCloseModal}>
+              &times;
+            </span>
+            <h3>{selectedService.name}</h3>
+            <div className="modal-images">
+              <img src={selectedService.titleImage} alt="Service" />
+            </div>
+            <p>{selectedService.description}</p>
+            <p>Price: {selectedService.price} CAD</p>
+            <p>Location: {selectedService.location}</p>
           </div>
         </div>
       )}

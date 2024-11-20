@@ -1,112 +1,100 @@
-/* contactForm.css
-
 .contact-form-container {
-    max-width: 500px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button {
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-.error {
-    color: red;
-    margin-bottom: 15px;
-}
- */
- .contact-form-container {
     max-width: 600px;
-    margin: auto;
-    padding: 2rem;
-    background-color: #000000; /* Black background */
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #1a1a1a; /* Dark theme */
     color: #ffffff; /* White text */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-}
-
-.contact-form-container h3,
-.contact-form-container p {
-    color: #ffffff; /* White for text inside black box */
-}
-
-.error {
-    color: #ff6b6b; /* Red error color */
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  .contact-form-container h3 {
+    font-size: 1.8em;
+    color: #f39c12; /* Accent color */
+    margin-bottom: 20px;
     text-align: center;
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-}
-
-.success-message {
-    color: #28a745; /* Green success color */
+  }
+  
+  .contact-form-container p {
+    color: #bbbbbb;
+    font-size: 1em;
+    margin-bottom: 30px;
     text-align: center;
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-}
-
-.form-group label {
-    color: #ffffff; /* White label color */
-    font-weight: 500;
-    margin-bottom: 0.5rem;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
     display: block;
-}
-
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group textarea {
+    margin-bottom: 10px;
+    font-size: 1em;
+    font-weight: 500;
+    color: #ffffff;
+  }
+  
+  .form-group input,
+  .form-group textarea {
     width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    font-size: 1rem;
-    color: #000000; /* Black text inside inputs */
-    background-color: #ffffff; /* White input background */
-}
-
-button[type="submit"],
-.map-button {
-    width: 100%;
-    padding: 0.75rem;
-    margin-top: 1rem;
-    font-size: 1rem;
+    padding: 15px;
+    background: #333333; /* Dark input background */
+    border: 1px solid #444444; /* Subtle border */
+    border-radius: 6px;
     color: #ffffff; /* White text */
-    background-color: #007bff; /* Blue background */
+    font-size: 1em;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: #f39c12;
+    box-shadow: 0 4px 8px rgba(243, 156, 18, 0.4); /* Subtle orange glow */
+    outline: none;
+  }
+  
+  .error {
+    color: #ff6b6b; /* Red error message */
+    font-size: 0.9em;
+    margin-bottom: 10px;
+  }
+  
+  .success-message {
+    color: #28a745; /* Green success message */
+    font-size: 0.9em;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #f39c12;
+    color: #ffffff;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
+    font-size: 1em;
+    font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover,
-.map-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-}
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #e67e22; /* Slightly darker orange */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(243, 156, 18, 0.4);
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .contact-form-container {
+      padding: 20px;
+    }
+  
+    button[type="submit"] {
+      font-size: 0.9em;
+      padding: 12px;
+    }
+  }
+  

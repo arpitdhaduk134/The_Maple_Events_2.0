@@ -1,138 +1,13 @@
-/* ImageGallery.css */
-/* Styling for left and right arrows */
-.arrow-left,
-.arrow-right {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.6);
-  color: white;
-  font-size: 2em;
-  border: none;
-  padding: 15px;
-  cursor: pointer;
-  border-radius: 50%;
-  z-index: 10;
-}
-
-.arrow-left {
-  left: 20px;
-}
-
-.arrow-right {
-  right: 20px;
-}
-
-.arrow-left:hover,
-.arrow-right:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-/* Main gallery container */
-.gallery {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Display images as grid (2 images per row) */
-.image-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  width: 100%;
-  margin-bottom: 30px;
-}
-
-/* Styling for thumbnails */
-.thumbnail {
-  position: relative;
-  cursor: pointer;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease-in-out;
-}
-
-.thumbnail img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-.thumbnail:hover {
-  transform: scale(1.05);
-}
-
-/* Expanded Image View when clicked */
-.expanded-image-view {
-  position: fixed; /* Fix the image to the center of the page */
-  top: 50%; 
-  left: 50%;
-  transform: translate(-50%, -50%); /* Center the image */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-  z-index: 100; /* Ensure it's above everything else */
-}
-
-/* Styling for the expanded image */
-.expanded-image {
-  max-width: 80vw;
-  max-height: 80vh;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-}
-
-/* Overlay for blurred background */
-.expanded-image-view::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(5px); /* Apply blur effect to the background */
-  z-index: -1; /* Keep the blur behind the image */
-}
-
-/* Cancel button - positioned at the top right of the page */
-.cancel-button {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-  z-index: 200;
-}
-
-.cancel-button:hover {
-  background: rgba(0, 0, 0, 0.8);
-}
 /* Events Container */
 .events-container {
   padding: 60px 30px;
-  background: linear-gradient(to right, #f5f7fa, #c3cfe2); /* Soft gradient background */
+  background: linear-gradient(to right, #f5f7fa, #e4ecf7); /* Light gradient */
   text-align: center;
-  color: #333;
 }
 
 .events-title {
-  font-size: 3em;
-  margin-bottom: 50px;
+  font-size: 2.5em;
+  margin-bottom: 40px;
   color: #333;
   font-weight: 700;
   letter-spacing: 2px;
@@ -142,32 +17,31 @@
 .events-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 20px;
   justify-content: center;
-  max-width: 1200px;
-  margin: 0 auto; /* Center the grid */
 }
 
 /* Individual Event Card */
 .event-card {
-  background: white;
+  background: #ffffff;
   border-radius: 15px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Soft shadow */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Soft shadow */
   overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
-  width: calc(50% - 30px); /* Two cards per row with gap */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  width: calc(100% / 3 - 20px); /* Three cards per row with gaps */
+  max-width: 300px; /* Restrict the maximum size */
   cursor: pointer;
 }
 
 .event-card:hover {
   transform: translateY(-10px); /* Lift effect on hover */
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
 }
 
 /* Event Image Styling */
 .event-image {
   width: 100%;
-  height: 220px;
+  height: 180px;
   object-fit: cover;
   transition: transform 0.3s ease-in-out;
 }
@@ -183,7 +57,7 @@
 }
 
 .event-title {
-  font-size: 1.7em;
+  font-size: 1.5em;
   margin: 0;
   color: #2c3e50; /* Darker title color */
   font-weight: bold;
@@ -191,21 +65,29 @@
 
 .event-date {
   font-size: 1.1em;
-  color: #8e44ad; /* Accent color for date */
+  color: #8e44ad; /* Accent color for the date */
   margin: 8px 0;
-  font-weight: 500;
 }
 
 .event-description {
-  font-size: 1em;
+  font-size: 0.95em;
   color: #555;
   line-height: 1.6;
   margin-top: 10px;
 }
 
 /* Responsive Design Adjustments */
+@media (max-width: 1024px) {
+  .events-grid {
+    gap: 15px;
+  }
+  .event-card {
+    width: calc(100% / 2 - 15px); /* Two cards per row on tablets */
+  }
+}
+
 @media (max-width: 768px) {
   .event-card {
-    width: 100%; /* Full width on smaller screens */
+    width: 100%; /* One card per row on small screens */
   }
 }

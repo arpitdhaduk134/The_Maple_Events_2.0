@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const budgetController = require('../controllers/budgetController');
+const { calculateBudget } = require('../controllers/budgetController');
 
-router.post('/calculate', budgetController.calculateBudget);
+// Budget Calculator Endpoint
+router.post('/calculate', calculateBudget);
 
 module.exports = router;

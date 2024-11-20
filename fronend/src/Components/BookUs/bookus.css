@@ -1,90 +1,166 @@
-/* BookUs.css */
-
-/* Main container for the BookUs component */
-.portfolio-mergecontainer {
+.contact-section {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+/* Visit Us Container Styling */
+.contact-info {
+    flex: 1;
+    max-width: 600px; /* Reduce maximum width for better proportions */
     padding: 20px;
-    background-color: #f9f9f9;
-    font-family: Arial, sans-serif;
+    margin: 0 auto; /* Center the container */
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Center-align text for consistency */
+    display: flex;
+    flex-direction: column; /* Stack the contents vertically */
+    gap: 15px; /* Add spacing between elements */
 }
 
-.portfolio-container {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.portfolio-text h2 {
-    font-size: 2em;
+/* Text Styling */
+.contact-info h2 {
+    font-size: 1.8em;
     color: #333;
     margin-bottom: 10px;
 }
 
-.portfolio-text p {
-    font-size: 1.2em;
+.contact-info p {
+    font-size: 1em;
     color: #666;
-    max-width: 600px;
-    margin: 0 auto;
     line-height: 1.6;
 }
 
-/* Contact form styling */
-.contact-form {
-    width: 100%;
-    max-width: 500px;
-    margin: 20px auto;
+.contact-info h3 {
+    font-size: 1.2em;
+    color: #007bff;
+    margin-top: 10px;
+}
+
+
+/* Map Container Styling */
+.map-container {
+    flex: 1;
+    max-width: 600px; /* Reduce maximum width for better proportions */
     padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto; /* Center the container */
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* Align the map and button vertically */
+    align-items: center; /* Center align the contents */
 }
 
-/* Contact form inputs */
-.contact-form input,
-.contact-form textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1em;
-    color: #333;
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-    border-color: #0073e6;
-    outline: none;
-}
-
-/* Contact form button */
-.contact-form button {
-    width: 100%;
-    padding: 12px;
-    background-color: #0073e6;
-    color: #fff;
-    font-size: 1em;
-    font-weight: bold;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.contact-form button:hover {
-    background-color: #005bb5;
-}
-
-/* Optional MapComponent styling */
-.map-component {
-    margin-top: 20px;
-    width: 100%;
-    max-width: 800px;
-    height: 300px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+/* Map Element */
+.map-container > div {
+    width: 100%; /* Ensure map takes full width of the container */
+    height: 300px; /* Maintain a good aspect ratio */
+    border-radius: 10px;
     overflow: hidden;
 }
+
+/* Map Button */
+.map-button {
+    display: block;
+    width: auto; /* Set the width to auto for dynamic sizing */
+    max-width: 200px; /* Set a maximum width */
+    margin: 20px auto; /* Center the button horizontally */
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.map-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 91, 179, 0.6);
+    background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .contact-section {
+        flex-direction: column;
+    }
+
+    .contact-info,
+    .map-container {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  /* Animation for Contact Form */
+  .contact-form-container {
+    animation: fadeIn 0.8s ease-in-out;
+  }
+  
+  /* Animation for Visit Us Container */
+  .contact-info {
+    animation: slideInLeft 1s ease-in-out;
+  }
+  
+  /* Animation for Map Container */
+  .map-container {
+    animation: slideInRight 1s ease-in-out;
+  }
+  
+  /* Add hover effect for the map button */
+  .map-button:hover {
+    transform: translateY(-3px) scale(1.05); /* Slight hover effect with scaling */
+    box-shadow: 0 6px 14px rgba(0, 91, 179, 0.6);
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .contact-info,
+    .map-container {
+      animation: fadeIn 0.8s ease-in-out; /* Both fade in for smaller screens */
+    }
+  }
+  
