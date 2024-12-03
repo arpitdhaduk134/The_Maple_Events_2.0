@@ -1,0 +1,45 @@
+.about-us-management {
+    padding: 20px;
+  }
+  
+  .about-us-management h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .about-us-management h3 {
+    font-size: 1.5rem;
+    margin-top: 20px;
+  }
+  
+  .about-us-management input,
+  .about-us-management textarea {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .about-us-management button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .about-us-management button:hover {
+    background-color: #0056b3;
+  }
+  
+  .images img {
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  

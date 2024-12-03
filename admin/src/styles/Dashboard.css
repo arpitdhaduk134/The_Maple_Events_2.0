@@ -1,0 +1,29 @@
+/* Dashboard.css */
+.dashboard {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard h1 {
+  font-size: 24px;
+  color: #333333;
+}
+
+.dashboard ul {
+  margin-top: 20px;
+}
+
+.dashboard ul li {
+  margin: 10px 0;
+}
+
+.dashboard ul li a {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.dashboard ul li a:hover {
+  text-decoration: underline;
+}

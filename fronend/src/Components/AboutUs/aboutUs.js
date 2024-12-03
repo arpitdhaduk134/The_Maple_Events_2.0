@@ -1,53 +1,51 @@
-import React from 'react';
-import './aboutUs.css'; // External CSS for styling
-import aboutUsImage from '../../Images/i2.jpg'; // Adjust the path to your image
+import React, { useEffect, useState } from "react";
+import "./aboutUs.css";
 
 const AboutUs = () => {
-    return (
-        <div className='about-us-mergecontainer'>
-  <div className="about-us-container">
-            <div className="about-us-text">
-                <h2>About Us</h2>
-                <p>
-                We are The Maple Events, Guelph’s premier event planning company. Our dedicated team specializes in crafting unforgettable celebrations, 
-                from intimate birthdays to grand corporate functions. We pride ourselves on our meticulous planning and personalized approach, 
-                ensuring your vision becomes a reality. Our mission is to provide exceptional service and unique experiences tailored to your needs.
-                We are located in the heart of Guelph and offer a range of customizable packages. Trust us to transform your special occasion into a cherished memory. 
-                Let’s create something extraordinary together. Contact us today!
-                </p>
-               
-            </div>
-            <div className="about-us-image">
+  const [aboutUs, setAboutUs] = useState({
+    title: "",
+    description: "",
+    images: [],
+  });
+
+  useEffect(() => {
+    const fetchAboutUs = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/about-us");
+        const data = await response.json();
+        setAboutUs(data);
+      } catch (error) {
+        console.error("Error fetching About Us data:", error);
+      }
+    };
+
+    fetchAboutUs();
+  }, []);
+
+  return (
+    <div className="about-us-container">
+      <div className="about-us-header">
+        <h1>{aboutUs.title || "About Us"}</h1>
+        <p>{aboutUs.description || "Learn more about who we are and what we do."}</p>
+      </div>
+      <div className="about-us-content">
+        {aboutUs.images && aboutUs.images.length > 0 ? (
+          <div className="about-us-images">
+            {aboutUs.images.map((image, index) => (
+              <div key={index} className="about-us-image-card">
                 <img
-                    src={aboutUsImage}
-                    alt="About Us"
-                    className="rounded-image"
+                  src={`http://localhost:5000${image}`}
+                  alt={`About Us ${index}`}
                 />
-            </div>
-        </div>
-        <div className="about-us-container">
-        <div className="about-us-image">
-                <img
-                    src={aboutUsImage}
-                    alt="About Us"
-                    className="rounded-image"
-                />
-            </div>
-            <div className="about-us-text">
-                <h2>The Art of Flawless Celebrations 🌟
-                </h2>
-                <p>
-                Experience unparalleled event planning with Maple Events, 
-                where meticulous attention to detail and creative expertise ensure your celebration is flawlessly executed and unforgettable.
-                </p>
-               
-            </div>
-            
-        </div>
-        </div>
-      
-        
-    );
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>No images available yet!</p>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default AboutUs;

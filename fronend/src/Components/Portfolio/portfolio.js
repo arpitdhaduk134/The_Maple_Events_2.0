@@ -1,53 +1,42 @@
-import React from 'react';
-import './portfolio.css'; // Import CSS for styling
-import event1 from '../../Images/event1.avif';
-import event2 from '../../Images/event2.avif';
-import event3 from '../../Images/event3.avif';
-import event4 from '../../Images/event4.avif';
+import React, { useEffect, useState } from 'react';
+import './portfolio.css';
 
 const Portfolio = () => {
-  const portfolioItems = [
-    {
-      id: 1,
-      title: 'Elegant Wedding',
-      description: 'An elegant wedding event with outdoor scenery.',
-      image: event1,
-    },
-    {
-      id: 2,
-      title: 'Corporate Event',
-      description: 'Corporate gathering with keynote speakers.',
-      image: event2,
-    },
-    {
-      id: 3,
-      title: 'Birthday Party',
-      description: 'A fun-filled birthday party for all ages.',
-      image: event3,
-    },
-    {
-      id: 4,
-      title: 'Charity Gala',
-      description: 'Annual charity fundraiser gala.',
-      image: event4,
-    },
-    // Add more events here
-  ];
+  const [portfolioItems, setPortfolioItems] = useState([]);
+
+  useEffect(() => {
+    const fetchPortfolioData = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/portfolio');
+        const data = await response.json();
+        setPortfolioItems(data);
+      } catch (error) {
+        console.error('Error fetching portfolio data:', error);
+      }
+    };
+
+    fetchPortfolioData();
+  }, []);
 
   return (
     <div className="portfolio-page">
-      <div className="portfolio-header">
-        <h1>Our Event Planning Portfolio</h1>
-        <p>Take a look at some of the memorable events we've organized.</p>
-      </div>
+      <h1>Our Stunning Portfolio</h1>
       <div className="portfolio-grid">
         {portfolioItems.map((item) => (
-          <div key={item.id} className="portfolio-item">
-            <img src={item.image} alt={item.title} />
-            <div className="portfolio-overlay">
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
+          <div key={item._id} className="portfolio-item">
+            <div className="portfolio-image-container">
+              {item.titleImage ? (
+                <img
+                  src={item.titleImage}
+                  alt={item.title}
+                  className="portfolio-image"
+                />
+              ) : (
+                <div className="fallback-image">No Image Available</div>
+              )}
             </div>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
           </div>
         ))}
       </div>

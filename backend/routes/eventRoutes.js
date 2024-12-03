@@ -1,78 +1,88 @@
 // routes/eventRoutes.js
 const express = require('express');
-const Event = require('../models/Event'); // Import Event model
-const upload = require('../middlewares/upload'); // Multer middleware for image upload
+const multer = require('multer');
+const Event = require('../models/Event');
 const router = express.Router();
 
-// Create a new event
-router.post('/', upload.single('image'), async (req, res) => {
-    try {
-        const { title, date, description } = req.body;
-        const imageUrl = `/uploads/${req.file.filename}`; // Path to uploaded image
+// Multer configuration for file upload
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './uploads/events');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname);
+  },
+});
+const upload = multer({ storage });
 
-        const newEvent = new Event({ title, date, description, imageUrl });
-        await newEvent.save();
-        res.status(201).json({ message: 'Event created successfully!', event: newEvent });
-    } catch (error) {
-        res.status(500).json({ message: 'Error creating event', error });
-    }
+// Create a new event
+router.post('/', upload.single('titleImage'), async (req, res) => {
+  try {
+    const { title, date, description } = req.body;
+    const titleImage = `/uploads/events/${req.file.filename}`;
+
+    const newEvent = new Event({ title, date, description, titleImage });
+    await newEvent.save();
+    res.status(201).json({ message: 'Event created successfully!', event: newEvent });
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating event', error });
+  }
 });
 
 // Get all events
 router.get('/', async (req, res) => {
-    try {
-        const events = await Event.find();
-        res.status(200).json(events);
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching events', error });
-    }
-});
-
-// Get a single event
-router.get('/:id', async (req, res) => {
-    try {
-        const event = await Event.findById(req.params.id);
-        if (!event) return res.status(404).json({ message: 'Event not found' });
-        res.status(200).json(event);
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching event', error });
-    }
+  try {
+    const events = await Event.find();
+    res.status(200).json(
+      events.map((event) => ({
+        ...event._doc,
+        titleImage: `http://localhost:5000${event.titleImage}`,
+      }))
+    );
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching events', error });
+  }
 });
 
 // Update an event
-router.put('/:id', upload.single('image'), async (req, res) => {
-    try {
-        const { title, date, description } = req.body;
-        const updateData = { title, date, description };
+router.put('/:id', upload.single('titleImage'), async (req, res) => {
+  try {
+    const { title, date, description } = req.body;
+    const updateData = { title, date, description };
 
-        if (req.file) {
-            updateData.imageUrl = `/uploads/${req.file.filename}`; // Update image if provided
-        }
-
-        const updatedEvent = await Event.findByIdAndUpdate(req.params.id, updateData, { new: true });
-        if (!updatedEvent) return res.status(404).json({ message: 'Event not found' });
-
-        res.status(200).json({ message: 'Event updated successfully!', event: updatedEvent });
-    } catch (error) {
-        res.status(500).json({ message: 'Error updating event', error });
+    if (req.file) {
+      updateData.titleImage = `/uploads/events/${req.file.filename}`;
     }
+
+    const updatedEvent = await Event.findByIdAndUpdate(req.params.id, updateData, { new: true });
+    if (!updatedEvent) return res.status(404).json({ message: 'Event not found' });
+
+    res.status(200).json({
+      message: 'Event updated successfully!',
+      event: {
+        ...updatedEvent._doc,
+        titleImage: `http://localhost:5000${updatedEvent.titleImage}`,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating event', error });
+  }
 });
 
 // Delete an event
 router.delete('/:id', async (req, res) => {
-    try {
-        const event = await Event.findByIdAndDelete(req.params.id);
-        if (!event) return res.status(404).json({ message: 'Event not found' });
+  try {
+    const event = await Event.findByIdAndDelete(req.params.id);
+    if (!event) return res.status(404).json({ message: 'Event not found' });
 
-        // Optional: Delete the image file
-        const fs = require('fs');
-        const path = `.${event.imageUrl}`;
-        if (fs.existsSync(path)) fs.unlinkSync(path);
+    const fs = require('fs');
+    const path = `.${event.titleImage}`;
+    if (fs.existsSync(path)) fs.unlinkSync(path); // Remove image file
 
-        res.status(200).json({ message: 'Event deleted successfully!' });
-    } catch (error) {
-        res.status(500).json({ message: 'Error deleting event', error });
-    }
+    res.status(200).json({ message: 'Event deleted successfully!' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting event', error });
+  }
 });
 
 module.exports = router;

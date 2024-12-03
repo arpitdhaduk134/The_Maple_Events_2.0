@@ -1,0 +1,103 @@
+.admin-management {
+    padding: 20px;
+  }
+  
+  .admin-management h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .admin-management .admin-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .admin-management .admin-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .admin-management .admin-item h3 {
+    font-size: 1.5rem;
+  }
+  
+  .admin-management .actions {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .admin-management .actions .icon {
+    cursor: pointer;
+    color: #007bff;
+    font-size: 1.2rem;
+  }
+  
+  .admin-management .actions .icon:hover {
+    color: #0056b3;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+  }
+  
+  .modal-content input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .modal-actions button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .modal-actions .save {
+    background: #28a745;
+    color: white;
+  }
+  
+  .modal-actions .save:hover {
+    background: #218838;
+  }
+  
+  .modal-actions .cancel {
+    background: #dc3545;
+    color: white;
+  }
+  
+  .modal-actions .cancel:hover {
+    background: #c82333;
+  }
+  
